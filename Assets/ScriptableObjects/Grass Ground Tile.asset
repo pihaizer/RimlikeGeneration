@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5d1562b31447dea8dc12df843eeab9, type: 3}
   m_Name: Grass Ground Tile
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
+  _tile: {fileID: 11400000, guid: 50ebee8dacf2a78418b1cf48c27c34f4, type: 2}

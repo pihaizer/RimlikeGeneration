@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,12 +11,21 @@ namespace RimlikeGeneration
         [SerializeField] private Tilemap _wallsTilemap;
         [SerializeField] private Tilemap _itemsTilemap;
 
-        public Vector2Int Size { get; private set; } = new(200, 200);
+        public Vector2Int Size;
+        private MapTile[,] _tiles; 
+
+        public void Clear()
+        {
+            _groundTilemap.ClearAllTiles();
+            _wallsTilemap.ClearAllTiles();
+            _itemsTilemap.ClearAllTiles();
+            
+            _tiles = new MapTile[Size.x, Size.y];
+        }
 
         public void SetGroundTile(int x, int y, GroundTile tile)
         {
             _groundTilemap.SetTile(new Vector3Int(x, y), tile.Tile);
-            
         }
     }
 }

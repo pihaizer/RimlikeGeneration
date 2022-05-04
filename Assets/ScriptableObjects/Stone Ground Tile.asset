@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5d1562b31447dea8dc12df843eeab9, type: 3}
   m_Name: Stone Ground Tile
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
+  _tile: {fileID: 11400000, guid: f4195dd69da19174ebbd65234372c62f, type: 2}
