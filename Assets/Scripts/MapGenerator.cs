@@ -10,6 +10,9 @@ namespace RimlikeGeneration
         [SerializeField, Range(0, 100)] private float _heightNoiseScale;
         [SerializeField, Range(0, 100)] private float _humidityNoiseScale;
 
+        [SerializeField, Range(0, 1f)] private float _stoneHeightRequirement;
+        [SerializeField, Range(0, 1f)] private float _grassHumidityRequirement;
+
         [SerializeField] private GroundTile _dirtGroundTile;
         [SerializeField] private GroundTile _grassGroundTile;
         [SerializeField] private GroundTile _stoneGroundTile;
@@ -36,32 +39,33 @@ namespace RimlikeGeneration
             {
                 for (int y = 0; y < _map.Size.y; y++)
                 {
-                    _map.SetGroundTile(x, y, GenerateTile(x, y));
+                    float height = GetHeight(x, y);
+                    float humidity = GetHumidity(x, y);
+                    _map.SetGroundTile(x, y, GenerateTile(height, humidity));
+                    // _map.SetGroundTileColor(x, y, new Color(0, humidity, 0));
                 }
             }
         }
 
-        private GroundTile GenerateTile(int x, int y)
+        private GroundTile GenerateTile(float height, float humidity)
         {
-            float height = GetHeight(x, y);
 
-            if (height > 0.4f) return _stoneGroundTile;
-
-            float humidity = GetHumidity(x, y);
-            return humidity > 0.5f ? _grassGroundTile : _dirtGroundTile;
+            if (height > _stoneHeightRequirement) return _stoneGroundTile;
+            return humidity > _grassHumidityRequirement ? _grassGroundTile : _dirtGroundTile;
         }
 
         private float GetHeight(int x, int y)
         {
             float xOffset = (SeedOffset + _heightOffset + x) % 100000 * _heightNoiseScale;
             float yOffset = (SeedOffset + _heightOffset + y) % 100000 * _heightNoiseScale;
-            float height = 1 - Mathf.PerlinNoise(xOffset, yOffset);
-            // Debug.Log($"{xOffset}:{yOffset} -> {height}");
-            return height;
+            return Mathf.PerlinNoise(xOffset, yOffset);
         }
 
-        private float GetHumidity(int x, int y) =>
-            Mathf.PerlinNoise((SeedOffset + _humidityOffset + x) * _humidityNoiseScale,
-                (SeedOffset + _humidityOffset + y) * _humidityNoiseScale);
+        private float GetHumidity(int x, int y)
+        {
+            float xOffset = (SeedOffset + _humidityOffset + x) % 100000 * _heightNoiseScale;
+            float yOffset = (SeedOffset + _humidityOffset + y) % 100000 * _heightNoiseScale;
+            return Mathf.PerlinNoise(xOffset, yOffset);
+        }
     }
 }

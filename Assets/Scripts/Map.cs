@@ -27,5 +27,11 @@ namespace RimlikeGeneration
         {
             _groundTilemap.SetTile(new Vector3Int(x, y), tile.Tile);
         }
+
+        public void SetGroundTileColor(int x, int y, Color color)
+        {
+            _groundTilemap.SetTileFlags(new Vector3Int(x, y), TileFlags.None);
+            _groundTilemap.SetColor(new Vector3Int(x, y), color);
+        }
     }
 }
