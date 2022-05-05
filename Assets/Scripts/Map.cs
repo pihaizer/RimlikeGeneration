@@ -12,20 +12,27 @@ namespace RimlikeGeneration
         [SerializeField] private Tilemap _itemsTilemap;
 
         public Vector2Int Size;
-        private MapTile[,] _tiles; 
+        private MapTile[,] _tiles;
 
         public void Clear()
         {
             _groundTilemap.ClearAllTiles();
             _wallsTilemap.ClearAllTiles();
             _itemsTilemap.ClearAllTiles();
-            
+
             _tiles = new MapTile[Size.x, Size.y];
         }
 
         public void SetGroundTile(int x, int y, GroundTile tile)
         {
+            if (tile == null) return;
             _groundTilemap.SetTile(new Vector3Int(x, y), tile.Tile);
+        }
+
+        public void SetWallTile(int x, int y, WallTile tile)
+        {
+            if (tile == null) return;
+            _wallsTilemap.SetTile(new Vector3Int(x, y), tile.Tile);
         }
 
         public void SetGroundTileColor(int x, int y, Color color)
